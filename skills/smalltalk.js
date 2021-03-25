@@ -2,7 +2,8 @@
 const thoughtfulReplies = {
     'How is Frank?': 'Good enough.',
     'ping': 'pong',
-    'legen': 'dary'
+    'legen': 'dary',
+    'How is Jef?': 'Most likely dead.'
 }
 
 module.exports.isTriggered = msg => msg.content in thoughtfulReplies;
