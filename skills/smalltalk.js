@@ -3,7 +3,7 @@ const thoughtfulReplies = {
     'How is Frank?': 'Good enough.',
     'ping': 'pong',
     'legen': 'dary',
-    'How is Jef?': 'Most likely dead.'
+    'Where is Jef?': 'Probably dead.'
 }
 
 module.exports.isTriggered = msg => msg.content in thoughtfulReplies;
