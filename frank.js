@@ -1,13 +1,37 @@
 // make the .env file with secrets work locally
 require('dotenv').config()
 
+/*******************************************
+ * Some casual IO action
+ * *****************************************/
+const fs = require('fs');
+
+// a global variable to pretend I can't write clean code
+const skills = seeWhatFrankCanDo();
+
+/*******************************************
+ * Setup discord bot
+ * *****************************************/
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
 client.login(process.env.TOKEN);
-
 client.on('ready', wreckHavoc);
-client.on('message', msg => doNotSpam(msg, iToldYouSo));
+client.on('message', msg => doNotSpam(msg, nudgeFrank));
+
+/*******************************************
+ * Definition after usage, because we can.
+ * *****************************************/
+function seeWhatFrankCanDo() {
+    const SKILLS_DIR = './skills/';
+
+    let skills = {};
+
+    fs.readdirSync(SKILLS_DIR).forEach(file => {
+        skills[file.replace(".js", "")] = require(SKILLS_DIR + file)
+    });
+    return skills;
+}
 
 function wreckHavoc() {
     console.log('It\'s ready!');
@@ -20,41 +44,10 @@ function doNotSpam(msg, spamming) {
     }
 }
 
-function iToldYouSo(msg) {
-    // You can never log enough
-    let str = msg.content;
-    console.log(str);
-
-    // Look how Frank keeps the conversation going
-    if (str in thoughtfulReplies) {
-        msg.channel.send(thoughtfulReplies[str]);
+function nudgeFrank(msg) {
+    for (const key in skills) {
+        if (skills[key].isTriggered(msg)) {
+            skills[key].run(msg);
+        }
     }
-
-    // or inserts obnoxious quotes from old books
-    else if (str == "story time!") {
-        const index = Math.floor(Math.random() * quotes.length);
-        msg.channel.send(quotes[index]);
-    }
-
-    // call secret message server
 }
-
-// TODO: find some nice APIs to call for random data
-const thoughtfulReplies = {
-    'How is Frank?': 'Good enough.',
-    'ping': 'pong',
-}
-
-// https://wiki.c2.com/?DouglasAdamsQuotes
-const quotes = [
-    "The story so far: In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a bad move.",
-    "I love deadlines. I like the whooshing sound they make as they fly by.",
-    "Human beings, who are almost unique in having the ability to learn from the experience of others, are also remarkable for their apparent disinclination to do so.",
-    "Life... Don't talk to me about life.",
-    "It must be a Thursday. I never could get the hang of Thursdays.",
-    "It hung in the air in exactly the way that bricks don't.",
-    "Time is an illusion -- lunchtime doubly so.",
-    "A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools.",
-    "The Hollywood process is like trying to grill a steak by having a succession of people coming into the room and breathing on it.",
-    "Here's a warm welcome to all the intelligent life forms out there. And to the rest of you... the trick is to bang the rocks together, guys."
-]
