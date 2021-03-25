@@ -1,0 +1,15 @@
+{
+  "name": "frank-malfunctions",
+  "version": "0.4.2",
+  "description": "Frank likes to talk",
+  "main": "frank.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jeroendm",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0"
+  }
+}
