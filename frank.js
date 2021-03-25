@@ -37,10 +37,13 @@ function wreckHavoc() {
     console.log('It\'s ready!');
 }
 
-// Frank only wants to talk in a single channel because of his social anxiety 
 function doNotSpam(msg, spamming) {
+    // Frank only wants to talk in a single channel because of his social anxiety 
     if (msg.channel.id == process.env.CHANNELID) {
-        spamming(msg);
+        // Avoid Frank talking to himself which could result in a mental breakdown
+        if (msg.author.id != process.env.ROBOTID) {
+            spamming(msg);
+        }
     }
 }
 
