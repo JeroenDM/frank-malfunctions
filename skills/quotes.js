@@ -12,7 +12,7 @@ const quotes = [
     "Here's a warm welcome to all the intelligent life forms out there. And to the rest of you... the trick is to bang the rocks together, guys."
 ]
 
-module.exports.isTriggered = msg => msg.content == "story time!";
+module.exports.isTriggered = msg => msg.content == "Story time!";
 
 module.exports.run = function (msg) {
     const index = Math.floor(Math.random() * quotes.length);
